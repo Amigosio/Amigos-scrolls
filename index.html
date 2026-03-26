@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Cicada Scrolls 🐛 | Blogs Worth Reading</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-overlay" class="login-overlay">
+  <div class="login-box">
+    <div class="login-logo">🐛</div>
+    <h1 class="login-title">CICADA<br>SCROLLS</h1>
+    <p class="login-sub">Enter the hive. Only the curious survive.</p>
+    <div class="input-group">
+      <label>USERNAME</label>
+      <input type="text" id="login-user" placeholder="who are you?" autocomplete="off"/>
+    </div>
+    <div class="input-group">
+      <label>PASSWORD</label>
+      <input type="password" id="login-pass" placeholder="your secret..."/>
+    </div>
+    <button class="login-btn" onclick="doLogin()">🔓 ENTER THE HIVE</button>
+    <p id="login-error" class="login-error"></p>
+    <p class="login-hint">💡 Hint: You know who you are.</p>
+  </div>
+</div>
+
+<!-- MAIN SITE -->
+<div id="main-site" class="hidden">
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-logo">🐛 CICADA SCROLLS</div>
+    <div class="nav-links">
+      <a href="#categories">Categories</a>
+      <a href="#blogs">Blogs</a>
+      <a href="#about">About</a>
+      <button class="logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-bg-text">CICADA</div>
+    <div class="hero-content">
+      <span class="hero-tag">🐛 EST. 2025 · MUMBAI, INDIA</span>
+      <h1 class="hero-title">THE CICADA<br><em>SCROLLS</em></h1>
+      <p class="hero-desc">Opinions so hot they'll scorch your Wi-Fi.<br>Finance 💸 · Politics 🗳️ · War ⚔️ · Economics 📉 · Health 💊 · Food 🍛 · Veg 🥦 · Religion 🕌</p>
+      <a href="#blogs" class="hero-cta">READ THE CHAOS ↓</a>
+    </div>
+    <div class="hero-ticker">
+      <span>📈 MARKETS CRASHED AGAIN · 🗳️ POLITICIANS STILL LYING · 🌿 VEGANS STILL WINNING · 🍛 BIRYANI STILL THE GOAT · 💊 SLEEP MORE, DOOM SCROLL LESS · ⚔️ WAR IS BAD (HOT TAKE) ·&nbsp;</span>
+      <span>📈 MARKETS CRASHED AGAIN · 🗳️ POLITICIANS STILL LYING · 🌿 VEGANS STILL WINNING · 🍛 BIRYANI STILL THE GOAT · 💊 SLEEP MORE, DOOM SCROLL LESS · ⚔️ WAR IS BAD (HOT TAKE) ·&nbsp;</span>
+    </div>
+  </header>
+
+  <!-- CATEGORIES -->
+  <section id="categories" class="categories-section">
+    <h2 class="section-title">PICK YOUR POISON</h2>
+    <div class="categories-grid">
+      <div class="cat-card cat-finance" onclick="filterBlogs('finance')">
+        <span class="cat-icon">💸</span>
+        <span class="cat-name">Finance</span>
+        <span class="cat-count">3 articles</span>
+      </div>
+      <div class="cat-card cat-politics" onclick="filterBlogs('politics')">
+        <span class="cat-icon">🗳️</span>
+        <span class="cat-name">Politics</span>
+        <span class="cat-count">3 articles</span>
+      </div>
+      <div class="cat-card cat-war" onclick="filterBlogs('war')">
+        <span class="cat-icon">⚔️</span>
+        <span class="cat-name">War</span>
+        <span class="cat-count">2 articles</span>
+      </div>
+      <div class="cat-card cat-economics" onclick="filterBlogs('economics')">
+        <span class="cat-icon">📉</span>
+        <span class="cat-name">Economics</span>
+        <span class="cat-count">2 articles</span>
+      </div>
+      <div class="cat-card cat-health" onclick="filterBlogs('health')">
+        <span class="cat-icon">💊</span>
+        <span class="cat-name">Health</span>
+        <span class="cat-count">2 articles</span>
+      </div>
+      <div class="cat-card cat-food" onclick="filterBlogs('food')">
+        <span class="cat-icon">🍛</span>
+        <span class="cat-name">Food</span>
+        <span class="cat-count">2 articles</span>
+      </div>
+      <div class="cat-card cat-veg" onclick="filterBlogs('veg')">
+        <span class="cat-icon">🥦</span>
+        <span class="cat-name">Veg</span>
+        <span class="cat-count">2 articles</span>
+      </div>
+      <div class="cat-card cat-religion" onclick="filterBlogs('religion')">
+        <span class="cat-icon">🕌</span>
+        <span class="cat-name">Religion</span>
+        <span class="cat-count">2 articles</span>
+      </div>
+      <div class="cat-card cat-all" onclick="filterBlogs('all')">
+        <span class="cat-icon">🌀</span>
+        <span class="cat-name">All Chaos</span>
+        <span class="cat-count">Show all</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG POSTS -->
+  <section id="blogs" class="blogs-section">
+    <h2 class="section-title">FRESH OFF THE PRESS <span id="filter-tag"></span></h2>
+    <div class="blogs-grid" id="blogs-grid">
+
+      <!-- FINANCE -->
+      <article class="blog-card" data-cat="finance">
+        <div class="blog-header" style="background:#FFD700;">
+          <span class="blog-emoji">💸</span>
+          <span class="blog-category">Finance</span>
+        </div>
+        <div class="blog-body">
+          <h3>Why Your Savings Account Is Actually a Joke</h3>
+          <p class="blog-excerpt">Your bank gives you 3% interest. Inflation runs at 6%. Congratulations — you are officially getting poorer while doing nothing. That's not saving, that's a slow financial funeral with a savings passbook as the eulogy. The real game? Assets. Index funds. Gold. Real estate. Anything that outpaces inflation. Yet here we are, letting banks hold our money hostage for pocket change. Time to wake up, desi investor.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 3 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="blog-card" data-cat="finance">
+        <div class="blog-header" style="background:#FF6B35;">
+          <span class="blog-emoji">📊</span>
+          <span class="blog-category">Finance</span>
+        </div>
+        <div class="blog-body">
+          <h3>Crypto: Genius Investment or Expensive Gambling?</h3>
+          <p class="blog-excerpt">Bitcoin made millionaires. Bitcoin also made a lot of people cry into their keyboards at 2am. The truth is somewhere in between — it's a volatile, speculative, occasionally revolutionary asset class that is 100% not for the faint-hearted. My hot take? Allocate only what you can afford to watch go to zero, laugh about it, and still afford chai. Because crypto doesn't care about your feelings.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 4 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="blog-card" data-cat="finance">
+        <div class="blog-header" style="background:#7B2FBE;">
+          <span class="blog-emoji">🏦</span>
+          <span class="blog-category">Finance</span>
+        </div>
+        <div class="blog-body">
+          <h3>SIP or Skip? The Truth About Mutual Funds in India</h3>
+          <p class="blog-excerpt">Everyone's uncle who works in finance will tell you to "start a SIP." And honestly? They're not wrong — they're just incomplete. SIPs are great for long-term wealth, but mutual funds aren't magic. Expense ratios eat returns. Fund managers are human. Markets go south. Still, for the average person with a job, a dream, and zero time to watch the Nifty 50, a SIP in an index fund might just be the smartest boring decision you ever make.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 5 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- POLITICS -->
+      <article class="blog-card" data-cat="politics">
+        <div class="blog-header" style="background:#E63946;">
+          <span class="blog-emoji">🗳️</span>
+          <span class="blog-category">Politics</span>
+        </div>
+        <div class="blog-body">
+          <h3>Election Season: Where Promises Go to Die</h3>
+          <p class="blog-excerpt">Every 5 years, politicians rediscover the poor. Suddenly there are roads to be built, gas cylinders to be given, and photographs to be taken next to farmers. Then the election ends and — poof — they vanish like they were never there. It's the greatest magic trick in democracy: making voters' problems disappear while making politicians' bank accounts appear. We deserve better. Or at least more creative lies.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 4 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="blog-card" data-cat="politics">
+        <div class="blog-header" style="background:#2D6A4F;">
+          <span class="blog-emoji">📺</span>
+          <span class="blog-category">Politics</span>
+        </div>
+        <div class="blog-body">
+          <h3>News Anchors vs Journalists: What's the Difference?</h3>
+          <p class="blog-excerpt">Once upon a time, journalism meant holding power accountable. Today? It means shouting louder than the person opposite you on a primetime debate. The news anchor has evolved from reporter to performer, complete with dramatic music, red banners, and outrage calibrated to exact TRP frequencies. Meanwhile, actual investigative journalists file RTIs from laptops and get about 1,200 views. The world is fine.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 3 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="blog-card" data-cat="politics">
+        <div class="blog-header" style="background:#F4A261;">
+          <span class="blog-emoji">🧑‍💼</span>
+          <span class="blog-category">Politics</span>
+        </div>
+        <div class="blog-body">
+          <h3>The Art of the Political U-Turn</h3>
+          <p class="blog-excerpt">Yesterday they were against it. Today they're for it. Tomorrow depends on opinion polls. The political U-turn is India's most practised sport — no training required, no shame needed. Coalition demands, constituency pressure, or just vibes can change a politician's position faster than a F1 car at Monza. Principles are optional. Adaptability is mandatory. And voters? Mostly forgiving. Which says more about us than them.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 3 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- WAR -->
+      <article class="blog-card" data-cat="war">
+        <div class="blog-header" style="background:#333;color:#ff4444;">
+          <span class="blog-emoji">⚔️</span>
+          <span class="blog-category">War</span>
+        </div>
+        <div class="blog-body">
+          <h3>Why Do Wars Start? (Hint: It's Never Just One Reason)</h3>
+          <p class="blog-excerpt">History teachers will give you one clean answer. Reality gives you seventeen messy ones. Wars start because of oil, egos, borders, religion, propaganda, fear, greed, and the occasional assassination of an archduke. The frightening part is how normal it all sounds once you peel back the nationalism. Ordinary people, convinced that dying for a politician's decision is glory. The 21st century hasn't fixed this. It just upgraded the weapons.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 5 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="blog-card" data-cat="war">
+        <div class="blog-header" style="background:#1D3557;">
+          <span class="blog-emoji">🕊️</span>
+          <span class="blog-category">War</span>
+        </div>
+        <div class="blog-body">
+          <h3>Arms Dealers: The World's Most Politely Ignored Industry</h3>
+          <p class="blog-excerpt">The global arms trade is worth over $600 billion a year. Countries that preach peace sell weapons to countries at war. Nobody blinks. Defence stocks go up when conflicts start. Nobody blinks again. We have conferences on climate change, summits on poverty, conventions on human rights — and absolutely nobody wants to seriously talk about who's supplying the weapons making all of that worse. Follow the money. Always follow the money.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 5 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ECONOMICS -->
+      <article class="blog-card" data-cat="economics">
+        <div class="blog-header" style="background:#06D6A0;">
+          <span class="blog-emoji">📉</span>
+          <span class="blog-category">Economics</span>
+        </div>
+        <div class="blog-body">
+          <h3>Inflation Explained: Why Your ₹100 Buys Less Every Year</h3>
+          <p class="blog-excerpt">In 2000, ₹100 could feed a small village. Today it barely covers a café sandwich. Welcome to inflation — the invisible tax that nobody voted for but everyone pays. Central banks print money to stimulate growth, costs rise, salaries lag, and somehow the answer is always "cut your avocado toast." The real issue is structural: wages haven't kept up with asset prices in decades. That's not personal failure. That's policy.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 4 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="blog-card" data-cat="economics">
+        <div class="blog-header" style="background:#118AB2;">
+          <span class="blog-emoji">🌍</span>
+          <span class="blog-category">Economics</span>
+        </div>
+        <div class="blog-body">
+          <h3>Is India Actually a $5 Trillion Economy? Let's Be Real.</h3>
+          <p class="blog-excerpt">The headlines say India is booming. The GDP charts look great. But ask a first-generation graduate struggling to find a job in their field, or a farmer who's seen input costs triple — and "booming" starts to sound hollow. GDP is a measure of total output, not a measure of how well the average person is doing. India's growth story is real, but so is its inequality story. Both can be true. In fact, they must both be told.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 6 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- HEALTH -->
+      <article class="blog-card" data-cat="health">
+        <div class="blog-header" style="background:#F72585;">
+          <span class="blog-emoji">💊</span>
+          <span class="blog-category">Health</span>
+        </div>
+        <div class="blog-body">
+          <h3>Sleep Is the Original Superfood (And You're Starving)</h3>
+          <p class="blog-excerpt">You will spend ₹3,000 on a protein powder that tastes like chalk but won't go to bed before 1am. That's the modern health paradox. Science is pretty clear: 7-9 hours of quality sleep improves memory, metabolism, immunity, mood, and probably your personality. And it's free. But we've created a culture where exhaustion is a badge of honour and rest is laziness. Wear your sleep like a trophy. Your brain is begging you.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 3 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="blog-card" data-cat="health">
+        <div class="blog-header" style="background:#7209B7;">
+          <span class="blog-emoji">🧠</span>
+          <span class="blog-category">Health</span>
+        </div>
+        <div class="blog-body">
+          <h3>Mental Health in India: Finally Talking, Slowly Healing</h3>
+          <p class="blog-excerpt">For decades, mental health was the family secret — the thing whispered about, never treated. "Just pray more." "Stress toh hoga." "Be strong." The result? A silent epidemic hidden behind high-functioning facades. The good news is that the conversation is finally beginning — driven by young people who refuse to suffer quietly. The bad news is that therapists are still unaffordable for most. Awareness without access is just inspiration porn. We need both.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 5 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- FOOD -->
+      <article class="blog-card" data-cat="food">
+        <div class="blog-header" style="background:#FF9F1C;">
+          <span class="blog-emoji">🍛</span>
+          <span class="blog-category">Food</span>
+        </div>
+        <div class="blog-body">
+          <h3>The Biryani Wars: Hyderabadi vs Lucknowi (I Chose Violence)</h3>
+          <p class="blog-excerpt">This is not a debate. This is a matter of identity, heritage, and deeply personal rice-related trauma. Hyderabadi biryani fans will tell you the dum process is sacred. Lucknowi fans will say pakki dum is the only civilised way to eat rice. Both are correct. Both are wrong. The real answer is: whichever biryani is in front of you right now is the best biryani. Except the overpriced hotel biryani. That one deserves criticism.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 4 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="blog-card" data-cat="food">
+        <div class="blog-header" style="background:#2DC653;">
+          <span class="blog-emoji">🥘</span>
+          <span class="blog-category">Food</span>
+        </div>
+        <div class="blog-body">
+          <h3>Street Food vs Restaurant: Where Does India Really Eat?</h3>
+          <p class="blog-excerpt">The ₹30 pav bhaji at the corner stall hits differently than the ₹450 "deconstructed pav bhaji" at a hipster café. India eats on the streets — always has. The roadside thela is a cultural institution, a sociology paper, and a culinary school rolled into one. And yet we dismiss it as "unhygienic" while paying triple for air-conditioned mediocrity. The most authentic food in India has never needed a Zomato rating. It has a queue at 8pm. That's enough.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 3 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- VEG -->
+      <article class="blog-card" data-cat="veg">
+        <div class="blog-header" style="background:#55A630;">
+          <span class="blog-emoji">🥦</span>
+          <span class="blog-category">Veg</span>
+        </div>
+        <div class="blog-body">
+          <h3>Going Veg in India: Easy Mode or Impossible Quest?</h3>
+          <p class="blog-excerpt">India is simultaneously the best and most confusing country to be vegetarian in. On one hand: paneer in every form imaginable, dal makhani that exists on a spiritual plane, samosas at every corner. On the other hand: "it's just chicken stock, not non-veg" at every restaurant, and the constant social interrogation of your dietary choices by people who are eating jalebi for breakfast. Being veg in India is an identity, not just a meal plan.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 4 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="blog-card" data-cat="veg">
+        <div class="blog-header" style="background:#A7C957;">
+          <span class="blog-emoji">🌱</span>
+          <span class="blog-category">Veg</span>
+        </div>
+        <div class="blog-body">
+          <h3>Plant-Based vs Traditional Veg: The New Debate Nobody Asked For</h3>
+          <p class="blog-excerpt">Now comes the plant-based meat — the burger that bleeds beet juice, the sausage made of soya, the "chicken" that has never met a chicken. Western startups are spending billions to make vegetables pretend to be meat, while India has centuries of vegetarian cuisine that needs no pretending. Dal doesn't need to bleed. Chana masala doesn't need a rebrand. We already have the world's most creative meatless food. We just forgot to charge $18 for it.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 4 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- RELIGION -->
+      <article class="blog-card" data-cat="religion">
+        <div class="blog-header" style="background:#C9184A;">
+          <span class="blog-emoji">🕌</span>
+          <span class="blog-category">Religion</span>
+        </div>
+        <div class="blog-body">
+          <h3>Faith, Festivals & the Business of Belief in India</h3>
+          <p class="blog-excerpt">India doesn't just have religion — it has a religion economy. Temples with more gold than small nations. Festival seasons that drive consumer spending. Astrology apps with millions of subscribers. We're a spiritual country that's also intensely capitalist about spirituality. And that's not necessarily wrong — it's just honest. The divine and the profitable have always walked hand in hand. At least in India, we're upfront about lighting a ₹500 diya for good returns.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 5 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="blog-card" data-cat="religion">
+        <div class="blog-header" style="background:#6A0572;">
+          <span class="blog-emoji">🙏</span>
+          <span class="blog-category">Religion</span>
+        </div>
+        <div class="blog-body">
+          <h3>Spiritual But Not Religious: Gen Z's New Default Setting</h3>
+          <p class="blog-excerpt">Millennials and Gen Z are increasingly ticking "spiritual but not religious" — lighting incense, reading Bhagavad Gita memes, attending sound baths, and also missing every Sunday prayer. They've kept the feeling, dropped the institution. Is that shallow? Or is it evolution? Religion was always personal before it became organised. Maybe we're returning to something older: the private, unmediated conversation with whatever is bigger than us. Or maybe it's just an aesthetic. Either way, the crystals are selling.</p>
+          <div class="blog-footer">
+            <span class="read-time">⏱ 4 min read</span>
+            <button class="read-more" onclick="openBlog(this)">Read More →</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about-section">
+    <div class="about-inner">
+      <span class="about-icon">🐛</span>
+      <h2>About The Cicada Scrolls</h2>
+      <p>Written by a curious mind from Mumbai, this blog covers everything that matters — and some things that don't, but are still worth arguing about. Finance, politics, the best biryani, whether you should meditate or just sleep more — it's all here. No ads. No PR fluff. Just opinions, facts, and the occasional terrible joke.</p>
+      <p class="about-quote">"Question everything. Eat good food. Sleep 8 hours. Read the Cicada Scrolls."</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">🐛 CICADA SCROLLS</div>
+    <p>© 2025 The Cicada Scrolls · Built with HTML + CSS + opinions · Hosted on GitHub Pages</p>
+    <div class="footer-links">
+      <a href="https://github.com" target="_blank">GitHub →</a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- BLOG MODAL -->
+<div id="blog-modal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕ Close</button>
+    <p class="modal-msg">🚀 Full article coming soon! This is just a preview. The full blog posts will be added at <strong>yourdomain.com</strong></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
