@@ -301,12 +301,20 @@ function postComment() {
   document.getElementById("comment-text").value = "";
 }
 
+// ---- EMAILJS CONFIG ----
+const EMAILJS_SERVICE_ID  = "service_mjg1ypx";
+const EMAILJS_TEMPLATE_ID = "template_7vgj9xi";
+const EMAILJS_PUBLIC_KEY  = "_vEp4_tRaxLSzIjy-";
+
 // ---- NEWSLETTER ----
-function subscribeNewsletter() {
-  const email = document.getElementById("newsletter-email").value.trim();
+async function subscribeNewsletter() {
+  const emailInput = document.getElementById("newsletter-email");
+  const email = emailInput.value.trim();
   const msg = document.getElementById("newsletter-msg");
   const list = document.getElementById("subscribers-list");
-  if (!email || !email.includes("@")) {
+  const btn = document.querySelector(".newsletter-form button");
+
+  if (!email || !email.includes("@") || !email.includes(".")) {
     msg.style.color = "#F72585";
     msg.textContent = "❌ Please enter a valid email address!";
     return;
@@ -316,14 +324,35 @@ function subscribeNewsletter() {
     msg.textContent = "⚠️ This email is already subscribed!";
     return;
   }
-  subscribers.push(email);
-  msg.style.color = "#06D6A0";
-  msg.textContent = "✅ You're in the hive! Welcome 🐛";
-  document.getElementById("newsletter-email").value = "";
-  const tag = document.createElement("span");
-  tag.className = "subscriber-tag";
-  tag.textContent = email;
-  list.appendChild(tag);
+
+  btn.textContent = "SENDING... 📨";
+  btn.disabled = true;
+  msg.style.color = "#aaa";
+  msg.textContent = "Sending your welcome email...";
+
+  try {
+    await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      { email: email },
+      EMAILJS_PUBLIC_KEY
+    );
+    subscribers.push(email);
+    msg.style.color = "#06D6A0";
+    msg.textContent = "✅ You are in the hive! Check your inbox for a welcome email 🐛";
+    emailInput.value = "";
+    const tag = document.createElement("span");
+    tag.className = "subscriber-tag";
+    tag.textContent = email;
+    list.appendChild(tag);
+  } catch (error) {
+    console.error("EmailJS error:", error);
+    msg.style.color = "#F72585";
+    msg.textContent = "❌ Something went wrong. Please try again!";
+  }
+
+  btn.textContent = "SUBSCRIBE 🐛";
+  btn.disabled = false;
 }
 
 // ---- CSS ANIMATIONS ----
