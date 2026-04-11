@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Tracker 📊 | Amigos Scrolls</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f0e8;
+      --accent1: #FFD700;
+      --accent3: #06D6A0;
+      --accent4: #F72585;
+      --nav-bg: rgba(10,10,10,0.97);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Syne', sans-serif; overflow-x: hidden; }
+
+    /* NAV */
+    .navbar {
+      position: sticky; top: 0;
+      background: var(--nav-bg); backdrop-filter: blur(10px);
+      border-bottom: 1px solid #1e1e1e;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 64px; z-index: 100; gap: 20px;
+    }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent1); letter-spacing: 2px; text-decoration: none; white-space: nowrap; }
+    .nav-links { display: flex; align-items: center; gap: 20px; }
+    .nav-links a { color: #aaa; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a.active { color: var(--accent1); }
+    .back-btn {
+      background: transparent; border: 1px solid #333; color: #888;
+      padding: 6px 14px; border-radius: 6px; font-family: 'Syne', sans-serif;
+      font-size: 11px; cursor: pointer; letter-spacing: 1px; text-transform: uppercase;
+      transition: all 0.2s; text-decoration: none;
+    }
+    .back-btn:hover { border-color: var(--accent1); color: var(--accent1); }
+
+    /* PAGE HEADER */
+    .tracker-header {
+      padding: 48px 40px 32px;
+      background: radial-gradient(ellipse at 40% 0%, #1a0a2e 0%, #0a0a0a 60%);
+      border-bottom: 1px solid #1a1a1a;
+      position: relative;
+      overflow: hidden;
+    }
+    .tracker-header::before {
+      content: 'TRACKER';
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 180px;
+      color: rgba(255,215,0,0.03);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 20px;
+    }
+    .tracker-header-inner { max-width: 800px; position: relative; z-index: 1; }
+    .tracker-tag {
+      display: inline-block;
+      background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.3);
+      color: var(--accent1); padding: 5px 14px; border-radius: 100px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .tracker-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 8vw, 96px);
+      line-height: 0.9; letter-spacing: 4px;
+      color: var(--white); margin-bottom: 16px;
+    }
+    .tracker-title span { color: var(--accent1); }
+    .tracker-desc { font-size: 15px; color: #888; line-height: 1.6; max-width: 560px; }
+
+    /* STATS ROW */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      padding: 32px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .stat-card {
+      background: #141414;
+      border: 1.5px solid #1e1e1e;
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex; flex-direction: column; gap: 6px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-3px); border-color: #333; }
+    .stat-icon { font-size: 24px; }
+    .stat-label { font-size: 11px; color: #555; letter-spacing: 1px; text-transform: uppercase; }
+    .stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--white); letter-spacing: 2px; }
+    .stat-value.green { color: #06D6A0; }
+    .stat-value.yellow { color: #FFD700; }
+    .stat-value.pink { color: #F72585; }
+
+    /* MAIN TRACKER AREA */
+    .tracker-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px; letter-spacing: 3px;
+      margin-bottom: 20px; margin-top: 40px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-title::after {
+      content: ''; flex: 1; height: 1px; background: #1e1e1e;
+    }
+
+    /* LIFE OS EMBED */
+    .lifeos-wrapper {
+      background: #0d0d0d;
+      border: 1.5px solid #1e1e1e;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .lifeos-topbar {
+      background: #111;
+      border-bottom: 1px solid #1e1e1e;
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #28c940; }
+    .lifeos-label {
+      margin-left: 8px;
+      font-size: 12px; color: #555;
+      font-family: 'Space Mono', monospace;
+    }
+    .lifeos-content {
+      padding: 0;
+      min-height: 600px;
+    }
+
+    /* EMBEDDED LIFE OS STYLES */
+    .lifeos-app {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --surface2: #1a1a26;
+      --border: rgba(255,255,255,0.07);
+      --accent: #c8f25a;
+      --accent2: #7b61ff;
+      --accent3: #ff6b6b;
+      --text: #f0f0f5;
+      --muted: #6b6b80;
+      --card-bg: rgba(255,255,255,0.03);
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 40px;
+    }
+
+    /* Life OS Login */
+    .los-login {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 560px;
+    }
+    .los-login-inner { width: 100%; max-width: 420px; }
+    .los-brand { text-align: center; margin-bottom: 32px; }
+    .los-brand-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(200,242,90,0.08); border: 1px solid rgba(200,242,90,0.2);
+      border-radius: 100px; padding: 6px 16px; font-size: 12px;
+      letter-spacing: 0.1em; color: #c8f25a; margin-bottom: 16px; text-transform: uppercase;
+    }
+    .los-brand-badge::before { content:''; width:6px; height:6px; border-radius:50%; background:#c8f25a; animation: losPulse 2s ease infinite; }
+    @keyframes losPulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+    .los-brand h2 { font-family: 'Syne', sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -2px; color: #f0f0f5; }
+    .los-brand h2 span { color: #c8f25a; }
+    .los-brand p { margin-top: 8px; color: #6b6b80; font-size: 14px; }
+
+    .los-card {
+      background: #12121a; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; padding: 32px; position: relative; overflow: hidden;
+    }
+    .los-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,242,90,0.4), transparent);
+    }
+    .los-tab-row {
+      display: flex; gap: 4px; background: #0a0a0f;
+      border-radius: 10px; padding: 4px; margin-bottom: 24px;
+    }
+    .los-tab {
+      flex: 1; padding: 9px; border: none; background: none;
+      color: #6b6b80; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+      border-radius: 8px; cursor: pointer; transition: all 0.2s;
+    }
+    .los-tab.active { background: #c8f25a; color: #0a0a0f; }
+    .los-group { margin-bottom: 16px; }
+    .los-group label { display: block; font-size: 11px; font-weight: 500; color: #6b6b80; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+    .los-group input {
+      width: 100%; background: #0a0a0f; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 12px 14px; color: #f0f0f5;
+      font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+      transition: border-color 0.2s; box-sizing: border-box;
+    }
+    .los-group input:focus { border-color: rgba(200,242,90,0.4); box-shadow: 0 0 0 3px rgba(200,242,90,0.08); }
+    .los-group input::placeholder { color: #6b6b80; }
+    .los-btn {
+      width: 100%; background: #c8f25a; color: #0a0a0f; border: none;
+      border-radius: 10px; padding: 14px; font-family: 'Syne', sans-serif;
+      font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 6px;
+      transition: all 0.2s;
+    }
+    .los-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(200,242,90,0.3); }
+    .los-divider { text-align: center; color: #6b6b80; font-size: 12px; margin: 16px 0; position: relative; }
+    .los-divider::before, .los-divider::after { content:''; position:absolute; top:50%; width:42%; height:1px; background:rgba(255,255,255,0.07); }
+    .los-divider::before { left:0; } .los-divider::after { right:0; }
+    .los-demo-btn {
+      width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 12px; color: #f0f0f5; font-family: 'DM Sans', sans-serif;
+      font-size: 13px; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .los-demo-btn:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.03); }
+    .los-error { color: #ff6b6b; font-size: 12px; margin-top: 6px; display: none; }
+    .los-panel { display: none; }
+    .los-panel.active { display: block; }
+
+    /* DASHBOARD */
+    .los-dashboard { display: none; }
+    .los-dashboard.active { display: block; }
+    .los-dash-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px;
+    }
+    .los-welcome { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; }
+    .los-welcome span { color: #c8f25a; }
+    .los-signout {
+      background: transparent; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px; padding: 6px 14px; color: #6b6b80;
+      font-family: 'DM Sans', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.2s;
+    }
+    .los-signout:hover { border-color: #ff6b6b; color: #ff6b6b; }
+
+    /* TABS */
+    .los-nav-tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+    .los-nav-tab {
+      padding: 8px 18px; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 100px;
+      color: #6b6b80; font-family: 'DM Sans', sans-serif; font-size: 13px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .los-nav-tab.active { background: #c8f25a; border-color: #c8f25a; color: #0a0a0f; font-weight: 600; }
+    .los-tab-content { display: none; }
+    .los-tab-content.active { display: block; }
+
+    /* SUMMARY CARDS */
+    .los-summary { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .los-sum-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 18px 16px;
+    }
+    .los-sum-label { font-size: 11px; color: #6b6b80; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .los-sum-val { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; }
+    .los-sum-val.income { color: #c8f25a; }
+    .los-sum-val.expense { color: #ff6b6b; }
+    .los-sum-val.savings { color: #7b61ff; }
+
+    /* EXPENSE LIST */
+    .los-expense-item {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; padding: 14px 16px; margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .los-exp-info { display: flex; flex-direction: column; gap: 2px; }
+    .los-exp-desc { font-size: 14px; font-weight: 500; }
+    .los-exp-meta { font-size: 11px; color: #6b6b80; }
+    .los-exp-amount { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; }
+    .los-exp-amount.income { color: #c8f25a; }
+    .los-exp-amount.expense { color: #ff6b6b; }
+
+    /* ADD FORM */
+    .los-add-form {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 20px; margin-bottom: 20px;
+    }
+    .los-add-form h4 { font-size: 14px; font-weight: 600; margin-bottom: 14px; color: #c8f25a; }
+    .los-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .los-form-row input, .los-form-row select {
+      background: #0a0a0f; border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;
+      padding: 10px 12px; color: #f0f0f5; font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none;
+      transition: border-color 0.2s; width: 100%; box-sizing: border-box;
+    }
+    .los-form-row input:focus, .los-form-row select:focus { border-color: rgba(200,242,90,0.4); }
+    .los-form-row select option { background: #12121a; }
+    .los-add-btn {
+      background: #c8f25a; color: #0a0a0f; border: none; border-radius: 8px;
+      padding: 10px 20px; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .los-add-btn:hover { transform: translateY(-1px); }
+    .los-del-btn {
+      background: transparent; border: none; color: #ff6b6b; cursor: pointer; font-size: 16px; padding: 4px;
+    }
+
+    /* GOALS */
+    .los-goal-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 18px; margin-bottom: 12px;
+    }
+    .los-goal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .los-goal-title { font-size: 15px; font-weight: 600; }
+    .los-goal-pct { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: #c8f25a; }
+    .los-progress-bar { background: rgba(255,255,255,0.07); border-radius: 100px; height: 8px; overflow: hidden; margin-bottom: 8px; }
+    .los-progress-fill { height: 100%; border-radius: 100px; background: #c8f25a; transition: width 0.6s ease; }
+    .los-goal-amounts { display: flex; justify-content: space-between; font-size: 12px; color: #6b6b80; }
+
+    /* HABITS */
+    .los-habit-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 16px 18px; margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .los-habit-left { display: flex; align-items: center; gap: 12px; }
+    .los-habit-emoji { font-size: 28px; }
+    .los-habit-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .los-habit-info p { font-size: 12px; color: #6b6b80; }
+    .los-habit-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .los-streak { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: #c8f25a; }
+    .los-check-btn {
+      background: rgba(200,242,90,0.1); border: 1px solid rgba(200,242,90,0.3);
+      border-radius: 6px; padding: 4px 10px; color: #c8f25a; font-size: 12px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .los-check-btn:hover { background: #c8f25a; color: #0a0a0f; }
+    .los-check-btn.done { background: #c8f25a; color: #0a0a0f; cursor: default; }
+
+    /* FOOTER */
+    .tracker-footer {
+      text-align: center; padding: 40px;
+      border-top: 1px solid #1a1a1a;
+      color: #444; font-size: 13px;
+    }
+    .tracker-footer a { color: var(--accent1); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 0 16px; }
+      .nav-links a { font-size: 10px; }
+      .tracker-header { padding: 36px 20px 24px; }
+      .stats-row { padding: 20px; }
+      .tracker-main { padding: 0 20px 60px; }
+      .lifeos-app { padding: 24px 16px; }
+      .los-form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">🐛 AMIGOS SCROLLS</a>
+  <div class="nav-links">
+    <a href="index.html">← Back to Blogs</a>
+    <a href="tracker.html" class="active">📊 My Tracker</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="tracker-header">
+  <div class="tracker-header-inner">
+    <span class="tracker-tag">📊 Personal Dashboard</span>
+    <h1 class="tracker-title">MY<br><span>TRACKER</span> +</h1>
+    <p class="tracker-desc">Track your finances, goals and habits — all in one place. Your data stays local, private and secure. No servers, no tracking.</p>
+  </div>
+</div>
+
+<!-- QUICK STATS (dynamic) -->
+<div class="stats-row" id="quick-stats">
+  <div class="stat-card">
+    <span class="stat-icon">💰</span>
+    <span class="stat-label">Total Income</span>
+    <span class="stat-value yellow" id="qs-income">₹0</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-icon">📤</span>
+    <span class="stat-label">Total Expenses</span>
+    <span class="stat-value pink" id="qs-expense">₹0</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-icon">💎</span>
+    <span class="stat-label">Net Savings</span>
+    <span class="stat-value green" id="qs-savings">₹0</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-icon">🎯</span>
+    <span class="stat-label">Active Goals</span>
+    <span class="stat-value" id="qs-goals">0</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-icon">🔥</span>
+    <span class="stat-label">Habit Streaks</span>
+    <span class="stat-value yellow" id="qs-streaks">0 days</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="tracker-main">
+  <div class="section-title">LIFE OS</div>
+
+  <div class="lifeos-wrapper">
+    <div class="lifeos-topbar">
+      <div class="dot dot-red"></div>
+      <div class="dot dot-yellow"></div>
+      <div class="dot dot-green"></div>
+      <span class="lifeos-label">amigosscrolls.online/tracker — Life OS v1.0</span>
+    </div>
+
+    <div class="lifeos-content lifeos-app">
+
+      <!-- LOGIN -->
+      <div class="los-login" id="los-login">
+        <div class="los-login-inner">
+          <div class="los-brand">
+            <div class="los-brand-badge">✦ Your Personal OS</div>
+            <h2>Life <span>OS</span></h2>
+            <p>Finance, goals & habits — beautifully unified.</p>
+          </div>
+          <div class="los-card">
+            <div class="los-tab-row">
+              <button class="los-tab active" onclick="losTab('login')">Sign In</button>
+              <button class="los-tab" onclick="losTab('signup')">Create Account</button>
+            </div>
+            <!-- Login -->
+            <div class="los-panel active" id="los-login-panel">
+              <div class="los-group"><label>Email</label><input type="email" id="los-email" placeholder="you@example.com"/></div>
+              <div class="los-group"><label>Password</label><input type="password" id="los-pass" placeholder="••••••••"/></div>
+              <p class="los-error" id="los-login-err">Wrong credentials. Try demo@lifeos.app / demo123</p>
+              <button class="los-btn" onclick="losLogin()">Enter Life OS →</button>
+              <div class="los-divider">or</div>
+              <button class="los-demo-btn" onclick="losDemoLogin()">⚡ Continue with Demo Account</button>
+            </div>
+            <!-- Signup -->
+            <div class="los-panel" id="los-signup-panel">
+              <div class="los-group"><label>Full Name</label><input type="text" id="los-name" placeholder="Your name"/></div>
+              <div class="los-group"><label>Email</label><input type="email" id="los-semail" placeholder="you@example.com"/></div>
+              <div class="los-group"><label>Password</label><input type="password" id="los-spass" placeholder="Min 6 characters"/></div>
+              <p class="los-error" id="los-signup-err">Please fill all fields correctly.</p>
+              <button class="los-btn" onclick="losSignup()">Create My OS →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div class="los-dashboard" id="los-dashboard">
+        <div class="los-dash-header">
+          <div class="los-welcome">Hey, <span id="los-username">Friend</span> 👋</div>
+          <button class="los-signout" onclick="losSignout()">Sign Out</button>
+        </div>
+
+        <div class="los-nav-tabs">
+          <button class="los-nav-tab active" onclick="losDashTab('finance')">💸 Finance</button>
+          <button class="los-nav-tab" onclick="losDashTab('goals')">🎯 Goals</button>
+          <button class="los-nav-tab" onclick="losDashTab('habits')">🔥 Habits</button>
+        </div>
+
+        <!-- FINANCE TAB -->
+        <div class="los-tab-content active" id="los-finance">
+          <div class="los-summary">
+            <div class="los-sum-card"><div class="los-sum-label">Income</div><div class="los-sum-val income" id="dash-income">₹0</div></div>
+            <div class="los-sum-card"><div class="los-sum-label">Expenses</div><div class="los-sum-val expense" id="dash-expense">₹0</div></div>
+            <div class="los-sum-card"><div class="los-sum-label">Savings</div><div class="los-sum-val savings" id="dash-savings">₹0</div></div>
+          </div>
+          <div class="los-add-form">
+            <h4>+ Add Transaction</h4>
+            <div class="los-form-row">
+              <input type="text" id="exp-desc" placeholder="Description (e.g. Salary)"/>
+              <input type="number" id="exp-amount" placeholder="Amount (₹)"/>
+            </div>
+            <div class="los-form-row">
+              <select id="exp-type">
+                <option value="income">💚 Income</option>
+                <option value="expense">❤️ Expense</option>
+              </select>
+              <select id="exp-cat">
+                <option>Work</option><option>Food</option><option>Housing</option>
+                <option>Transport</option><option>Health</option><option>Entertainment</option>
+                <option>Shopping</option><option>Education</option><option>Other</option>
+              </select>
+            </div>
+            <button class="los-add-btn" onclick="addExpense()">Add Transaction</button>
+          </div>
+          <div id="los-expenses-list"></div>
+        </div>
+
+        <!-- GOALS TAB -->
+        <div class="los-tab-content" id="los-goals">
+          <div class="los-add-form">
+            <h4>+ Add New Goal</h4>
+            <div class="los-form-row">
+              <input type="text" id="goal-title" placeholder="Goal name (e.g. Emergency Fund)"/>
+              <input type="text" id="goal-emoji" placeholder="Emoji (e.g. 🛡️)"/>
+            </div>
+            <div class="los-form-row">
+              <input type="number" id="goal-target" placeholder="Target amount (₹)"/>
+              <input type="number" id="goal-current" placeholder="Current saved (₹)"/>
+            </div>
+            <button class="los-add-btn" onclick="addGoal()">Add Goal</button>
+          </div>
+          <div id="los-goals-list"></div>
+        </div>
+
+        <!-- HABITS TAB -->
+        <div class="los-tab-content" id="los-habits">
+          <div class="los-add-form">
+            <h4>+ Add New Habit</h4>
+            <div class="los-form-row">
+              <input type="text" id="habit-name" placeholder="Habit name (e.g. Read 20 mins)"/>
+              <input type="text" id="habit-emoji" placeholder="Emoji (e.g. 📚)"/>
+            </div>
+            <button class="los-add-btn" onclick="addHabit()">Add Habit</button>
+          </div>
+          <div id="los-habits-list"></div>
+        </div>
+      </div>
+
+    </div><!-- /lifeos-app -->
+  </div><!-- /lifeos-wrapper -->
+</div><!-- /tracker-main -->
+
+<div class="tracker-footer">
+  <p>🐛 <a href="index.html">Back to Amigos Scrolls</a> · Your data is stored locally on your device only · © 2025</p>
+</div>
+
+<script>
+// ========================
+// LIFE OS LOGIC
+// ========================
+
+// --- AUTH ---
+function losTab(tab) {
+  document.querySelectorAll('.los-tab').forEach((b,i) => {
+    b.classList.toggle('active', (i===0&&tab==='login')||(i===1&&tab==='signup'));
+  });
+  document.getElementById('los-login-panel').classList.toggle('active', tab==='login');
+  document.getElementById('los-signup-panel').classList.toggle('active', tab==='signup');
+}
+
+function losLogin() {
+  const email = document.getElementById('los-email').value;
+  const pass = document.getElementById('los-pass').value;
+  const err = document.getElementById('los-login-err');
+  const users = JSON.parse(localStorage.getItem('lifeos_users') || '[]');
+  const user = users.find(u => u.email===email && u.password===pass);
+  if (user || (email==='demo@lifeos.app' && pass==='demo123')) {
+    const name = user ? user.name : 'Demo User';
+    localStorage.setItem('lifeos_current', JSON.stringify({ email, name }));
+    err.style.display = 'none';
+    showDashboard(name);
+  } else {
+    err.style.display = 'block';
+  }
+}
+
+function losSignup() {
+  const name = document.getElementById('los-name').value.trim();
+  const email = document.getElementById('los-semail').value.trim();
+  const pass = document.getElementById('los-spass').value;
+  const err = document.getElementById('los-signup-err');
+  if (!name || !email || pass.length < 6) { err.style.display='block'; return; }
+  const users = JSON.parse(localStorage.getItem('lifeos_users') || '[]');
+  users.push({ name, email, password: pass });
+  localStorage.setItem('lifeos_users', JSON.stringify(users));
+  localStorage.setItem('lifeos_current', JSON.stringify({ email, name }));
+  err.style.display = 'none';
+  showDashboard(name);
+}
+
+function losDemoLogin() {
+  localStorage.setItem('lifeos_current', JSON.stringify({ email:'demo@lifeos.app', name:'Demo User' }));
+  if (!localStorage.getItem('lifeos_expenses')) {
+    localStorage.setItem('lifeos_expenses', JSON.stringify([
+      { id:1, desc:'Salary', amount:85000, type:'income', category:'Work', date:'2025-04-01' },
+      { id:2, desc:'Freelance', amount:15000, type:'income', category:'Work', date:'2025-04-05' },
+      { id:3, desc:'Rent', amount:22000, type:'expense', category:'Housing', date:'2025-04-01' },
+      { id:4, desc:'Groceries', amount:4500, type:'expense', category:'Food', date:'2025-04-03' },
+      { id:5, desc:'Netflix', amount:649, type:'expense', category:'Entertainment', date:'2025-04-04' },
+      { id:6, desc:'Gym', amount:2000, type:'expense', category:'Health', date:'2025-04-02' },
+    ]));
+  }
+  if (!localStorage.getItem('lifeos_goals')) {
+    localStorage.setItem('lifeos_goals', JSON.stringify([
+      { id:1, title:'Emergency Fund', emoji:'🛡️', target:200000, current:85000 },
+      { id:2, title:'Vacation to Bali', emoji:'✈️', target:80000, current:32000 },
+      { id:3, title:'New Laptop', emoji:'💻', target:120000, current:120000 },
+    ]));
+  }
+  if (!localStorage.getItem('lifeos_habits')) {
+    localStorage.setItem('lifeos_habits', JSON.stringify([
+      { id:1, name:'Morning Workout', emoji:'💪', streak:12, doneToday:false },
+      { id:2, name:'Read 20 mins', emoji:'📚', streak:5, doneToday:false },
+      { id:3, name:'Drink 2L Water', emoji:'💧', streak:8, doneToday:false },
+      { id:4, name:'Meditate', emoji:'🧘', streak:3, doneToday:false },
+    ]));
+  }
+  showDashboard('Demo User');
+}
+
+function losSignout() {
+  localStorage.removeItem('lifeos_current');
+  document.getElementById('los-login').style.display = 'flex';
+  document.getElementById('los-dashboard').classList.remove('active');
+}
+
+function showDashboard(name) {
+  document.getElementById('los-login').style.display = 'none';
+  document.getElementById('los-dashboard').classList.add('active');
+  document.getElementById('los-username').textContent = name.split(' ')[0];
+  renderFinance();
+  renderGoals();
+  renderHabits();
+  updateQuickStats();
+}
+
+// Auto-login if session exists
+window.addEventListener('DOMContentLoaded', () => {
+  const current = localStorage.getItem('lifeos_current');
+  if (current) {
+    const user = JSON.parse(current);
+    showDashboard(user.name);
+  }
+  // Enter key
+  document.getElementById('los-pass').addEventListener('keydown', e => { if(e.key==='Enter') losLogin(); });
+});
+
+// --- TABS ---
+function losDashTab(tab) {
+  document.querySelectorAll('.los-nav-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.los-tab-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('los-'+tab).classList.add('active');
+}
+
+// --- FINANCE ---
+function fmt(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
+
+function addExpense() {
+  const desc = document.getElementById('exp-desc').value.trim();
+  const amount = parseFloat(document.getElementById('exp-amount').value);
+  const type = document.getElementById('exp-type').value;
+  const cat = document.getElementById('exp-cat').value;
+  if (!desc || !amount) { alert('Please fill in description and amount!'); return; }
+  const expenses = JSON.parse(localStorage.getItem('lifeos_expenses') || '[]');
+  expenses.unshift({ id: Date.now(), desc, amount, type, category: cat, date: new Date().toISOString().split('T')[0] });
+  localStorage.setItem('lifeos_expenses', JSON.stringify(expenses));
+  document.getElementById('exp-desc').value = '';
+  document.getElementById('exp-amount').value = '';
+  renderFinance();
+  updateQuickStats();
+}
+
+function deleteExpense(id) {
+  let expenses = JSON.parse(localStorage.getItem('lifeos_expenses') || '[]');
+  expenses = expenses.filter(e => e.id !== id);
+  localStorage.setItem('lifeos_expenses', JSON.stringify(expenses));
+  renderFinance();
+  updateQuickStats();
+}
+
+function renderFinance() {
+  const expenses = JSON.parse(localStorage.getItem('lifeos_expenses') || '[]');
+  const income = expenses.filter(e=>e.type==='income').reduce((a,e)=>a+e.amount,0);
+  const expense = expenses.filter(e=>e.type==='expense').reduce((a,e)=>a+e.amount,0);
+  document.getElementById('dash-income').textContent = fmt(income);
+  document.getElementById('dash-expense').textContent = fmt(expense);
+  document.getElementById('dash-savings').textContent = fmt(income - expense);
+  const list = document.getElementById('los-expenses-list');
+  if (expenses.length === 0) { list.innerHTML = '<p style="color:#6b6b80;text-align:center;padding:20px;">No transactions yet. Add one above!</p>'; return; }
+  list.innerHTML = expenses.map(e => `
+    <div class="los-expense-item">
+      <div class="los-exp-info">
+        <div class="los-exp-desc">${e.desc}</div>
+        <div class="los-exp-meta">${e.category} · ${e.date}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="los-exp-amount ${e.type}">${e.type==='income'?'+':'-'}${fmt(e.amount)}</div>
+        <button class="los-del-btn" onclick="deleteExpense(${e.id})">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// --- GOALS ---
+function addGoal() {
+  const title = document.getElementById('goal-title').value.trim();
+  const emoji = document.getElementById('goal-emoji').value.trim() || '🎯';
+  const target = parseFloat(document.getElementById('goal-target').value);
+  const current = parseFloat(document.getElementById('goal-current').value) || 0;
+  if (!title || !target) { alert('Please fill in goal name and target!'); return; }
+  const goals = JSON.parse(localStorage.getItem('lifeos_goals') || '[]');
+  goals.push({ id: Date.now(), title, emoji, target, current });
+  localStorage.setItem('lifeos_goals', JSON.stringify(goals));
+  document.getElementById('goal-title').value = '';
+  document.getElementById('goal-emoji').value = '';
+  document.getElementById('goal-target').value = '';
+  document.getElementById('goal-current').value = '';
+  renderGoals();
+  updateQuickStats();
+}
+
+function deleteGoal(id) {
+  let goals = JSON.parse(localStorage.getItem('lifeos_goals') || '[]');
+  goals = goals.filter(g => g.id !== id);
+  localStorage.setItem('lifeos_goals', JSON.stringify(goals));
+  renderGoals();
+  updateQuickStats();
+}
+
+function renderGoals() {
+  const goals = JSON.parse(localStorage.getItem('lifeos_goals') || '[]');
+  const list = document.getElementById('los-goals-list');
+  if (goals.length === 0) { list.innerHTML = '<p style="color:#6b6b80;text-align:center;padding:20px;">No goals yet. Add one above!</p>'; return; }
+  list.innerHTML = goals.map(g => {
+    const pct = Math.min(100, Math.round((g.current / g.target) * 100));
+    return `<div class="los-goal-card">
+      <div class="los-goal-header">
+        <div class="los-goal-title">${g.emoji} ${g.title}</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="los-goal-pct">${pct}%</div>
+          <button class="los-del-btn" onclick="deleteGoal(${g.id})">🗑️</button>
+        </div>
+      </div>
+      <div class="los-progress-bar"><div class="los-progress-fill" style="width:${pct}%"></div></div>
+      <div class="los-goal-amounts"><span>${fmt(g.current)} saved</span><span>Target: ${fmt(g.target)}</span></div>
+    </div>`;
+  }).join('');
+}
+
+// --- HABITS ---
+function addHabit() {
+  const name = document.getElementById('habit-name').value.trim();
+  const emoji = document.getElementById('habit-emoji').value.trim() || '✅';
+  if (!name) { alert('Please enter a habit name!'); return; }
+  const habits = JSON.parse(localStorage.getItem('lifeos_habits') || '[]');
+  habits.push({ id: Date.now(), name, emoji, streak: 0, doneToday: false });
+  localStorage.setItem('lifeos_habits', JSON.stringify(habits));
+  document.getElementById('habit-name').value = '';
+  document.getElementById('habit-emoji').value = '';
+  renderHabits();
+}
+
+function checkHabit(id) {
+  const habits = JSON.parse(localStorage.getItem('lifeos_habits') || '[]');
+  const h = habits.find(h => h.id === id);
+  if (h && !h.doneToday) { h.doneToday = true; h.streak += 1; }
+  localStorage.setItem('lifeos_habits', JSON.stringify(habits));
+  renderHabits();
+  updateQuickStats();
+}
+
+function deleteHabit(id) {
+  let habits = JSON.parse(localStorage.getItem('lifeos_habits') || '[]');
+  habits = habits.filter(h => h.id !== id);
+  localStorage.setItem('lifeos_habits', JSON.stringify(habits));
+  renderHabits();
+  updateQuickStats();
+}
+
+function renderHabits() {
+  const habits = JSON.parse(localStorage.getItem('lifeos_habits') || '[]');
+  const list = document.getElementById('los-habits-list');
+  if (habits.length === 0) { list.innerHTML = '<p style="color:#6b6b80;text-align:center;padding:20px;">No habits yet. Add one above!</p>'; return; }
+  list.innerHTML = habits.map(h => `
+    <div class="los-habit-card">
+      <div class="los-habit-left">
+        <div class="los-habit-emoji">${h.emoji}</div>
+        <div class="los-habit-info">
+          <h4>${h.name}</h4>
+          <p>🔥 ${h.streak} day streak</p>
+        </div>
+      </div>
+      <div class="los-habit-right">
+        <button class="los-check-btn ${h.doneToday?'done':''}" onclick="${h.doneToday?'':('checkHabit('+h.id+')')}">${h.doneToday?'✅ Done':'Mark Done'}</button>
+        <button class="los-del-btn" onclick="deleteHabit(${h.id})">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// --- QUICK STATS (top of page) ---
+function updateQuickStats() {
+  const expenses = JSON.parse(localStorage.getItem('lifeos_expenses') || '[]');
+  const goals = JSON.parse(localStorage.getItem('lifeos_goals') || '[]');
+  const habits = JSON.parse(localStorage.getItem('lifeos_habits') || '[]');
+  const income = expenses.filter(e=>e.type==='income').reduce((a,e)=>a+e.amount,0);
+  const expense = expenses.filter(e=>e.type==='expense').reduce((a,e)=>a+e.amount,0);
+  const maxStreak = habits.reduce((a,h)=>Math.max(a,h.streak),0);
+  document.getElementById('qs-income').textContent = fmt(income);
+  document.getElementById('qs-expense').textContent = fmt(expense);
+  document.getElementById('qs-savings').textContent = fmt(income - expense);
+  document.getElementById('qs-goals').textContent = goals.length;
+  document.getElementById('qs-streaks').textContent = maxStreak + ' days';
+}
+
+// Init stats on load
+updateQuickStats();
+</script>
+
+</body>
+</html>
