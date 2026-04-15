@@ -348,6 +348,132 @@
     }
     .tracker-footer a { color: var(--accent1); text-decoration: none; }
 
+    /* REPORT */
+    .los-report-btn-row { display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap; }
+    .los-gen-btn {
+      background: linear-gradient(135deg, #c8f25a, #7b61ff);
+      color: #0a0a0f; border: none; border-radius: 10px;
+      padding: 13px 28px; font-family: 'Syne', sans-serif;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; letter-spacing: 0.5px;
+    }
+    .los-gen-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,242,90,0.3); }
+    .los-print-btn {
+      background: transparent; border: 1px solid rgba(255,255,255,0.15);
+      color: #f0f0f5; border-radius: 10px; padding: 13px 28px;
+      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .los-print-btn:hover { border-color: #c8f25a; color: #c8f25a; }
+
+    /* REPORT CARD */
+    .report-card {
+      background: linear-gradient(145deg, #0d0d16, #12121e);
+      border: 1px solid rgba(200,242,90,0.15);
+      border-radius: 20px; overflow: hidden;
+      animation: reportFadeIn 0.5s ease;
+    }
+    @keyframes reportFadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+    .report-hero {
+      background: linear-gradient(135deg, #0f0f1e 0%, #1a1030 50%, #0f1a10 100%);
+      padding: 40px 36px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: relative; overflow: hidden;
+    }
+    .report-hero::before {
+      content: 'REPORT';
+      position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+      font-family: 'Bebas Neue', sans-serif; font-size: 120px;
+      color: rgba(200,242,90,0.04); letter-spacing: 10px; white-space: nowrap;
+    }
+    .report-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(200,242,90,0.08); border: 1px solid rgba(200,242,90,0.2);
+      border-radius: 100px; padding: 5px 14px; font-size: 11px;
+      color: #c8f25a; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .report-title { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: #f0f0f5; margin-bottom: 6px; }
+    .report-subtitle { font-size: 13px; color: #6b6b80; }
+    .report-date { font-family: 'Space Mono', monospace; font-size: 12px; color: #c8f25a; margin-top: 16px; }
+
+    .report-section { padding: 28px 36px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .report-section:last-child { border-bottom: none; }
+    .report-section-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px;
+      color: #c8f25a; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
+    }
+
+    /* METRIC GRID */
+    .report-metrics { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 4px; }
+    .report-metric {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 16px;
+    }
+    .report-metric-label { font-size: 10px; color: #6b6b80; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .report-metric-val { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; }
+    .rm-green { color: #c8f25a; }
+    .rm-red { color: #ff6b6b; }
+    .rm-purple { color: #7b61ff; }
+    .rm-white { color: #f0f0f5; }
+
+    /* CATEGORY BARS */
+    .report-cat-row { margin-bottom: 12px; }
+    .report-cat-label { display: flex; justify-content: space-between; font-size: 13px; color: #aaa; margin-bottom: 5px; }
+    .report-cat-bar { background: rgba(255,255,255,0.06); border-radius: 100px; height: 7px; overflow: hidden; }
+    .report-cat-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #7b61ff, #c8f25a); transition: width 0.8s ease; }
+
+    /* GOAL TABLE */
+    .report-table { width: 100%; border-collapse: collapse; }
+    .report-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b80; padding: 8px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .report-table td { padding: 12px; font-size: 13px; color: #ccc; border-bottom: 1px solid rgba(255,255,255,0.03); }
+    .report-table tr:last-child td { border-bottom: none; }
+    .report-pct-cell { font-family: 'Syne', sans-serif; font-weight: 700; }
+
+    /* HABIT GRID */
+    .report-habit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .report-habit-item {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 14px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .report-habit-left { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+    .report-habit-streak { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: #c8f25a; }
+
+    /* INSIGHT BOX */
+    .report-insight {
+      background: linear-gradient(135deg, rgba(123,97,255,0.08), rgba(200,242,90,0.06));
+      border: 1px solid rgba(200,242,90,0.15);
+      border-radius: 14px; padding: 20px 24px;
+      margin-top: 4px;
+    }
+    .report-insight h4 { font-size: 13px; color: #c8f25a; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .report-insight-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: 13px; color: #aaa; line-height: 1.5; }
+    .report-insight-item:last-child { margin-bottom: 0; }
+    .report-insight-dot { width: 6px; height: 6px; border-radius: 50%; background: #c8f25a; margin-top: 5px; flex-shrink: 0; }
+
+    /* TRANSACTION TABLE */
+    .report-txn-table { width:100%; border-collapse:collapse; }
+    .report-txn-table th { font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#6b6b80; padding:8px 10px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .report-txn-table td { padding:10px; font-size:12px; color:#ccc; border-bottom:1px solid rgba(255,255,255,0.03); }
+    .report-txn-table tr:last-child td { border-bottom:none; }
+    .txn-income { color:#c8f25a; font-weight:700; }
+    .txn-expense { color:#ff6b6b; font-weight:700; }
+
+    @media print {
+      .navbar, .tracker-header, .stats-row, .los-nav-tabs, .los-add-form,
+      .los-report-btn-row, #los-login, #los-finance, #los-goals, #los-habits,
+      .tracker-footer, .los-dash-header { display: none !important; }
+      body { background: white !important; color: black !important; }
+      .report-card { border: 1px solid #ddd !important; border-radius: 12px; }
+      .report-hero { background: #f5f5f5 !important; }
+      .report-hero::before { display: none; }
+      .report-title, .report-subtitle, .report-section-title { color: #111 !important; }
+      .report-metric-label, .report-cat-label, .report-table th, .report-table td { color: #333 !important; }
+      .report-metric { background: #f9f9f9 !important; border: 1px solid #eee !important; }
+      .report-insight { background: #f0fff0 !important; border: 1px solid #c8f25a !important; }
+    }
+
     @media (max-width: 768px) {
       .navbar { padding: 0 16px; }
       .nav-links a { font-size: 10px; }
@@ -356,6 +482,9 @@
       .tracker-main { padding: 0 20px 60px; }
       .lifeos-app { padding: 24px 16px; }
       .los-form-row { grid-template-columns: 1fr; }
+      .report-hero { padding: 28px 20px 20px; }
+      .report-section { padding: 20px; }
+      .report-title { font-size: 24px; }
     }
   </style>
 </head>
@@ -467,6 +596,7 @@
           <button class="los-nav-tab active" onclick="losDashTab('finance')">💸 Finance</button>
           <button class="los-nav-tab" onclick="losDashTab('goals')">🎯 Goals</button>
           <button class="los-nav-tab" onclick="losDashTab('habits')">🔥 Habits</button>
+          <button class="los-nav-tab" onclick="losDashTab('report')">📄 Generate Report</button>
         </div>
 
         <!-- FINANCE TAB -->
@@ -527,6 +657,16 @@
           </div>
           <div id="los-habits-list"></div>
         </div>
+
+        <!-- REPORT TAB -->
+        <div class="los-tab-content" id="los-report">
+          <div class="los-report-btn-row">
+            <button class="los-gen-btn" onclick="generateReport()">✨ Generate My Report</button>
+            <button class="los-print-btn" onclick="printReport()">🖨️ Print / Save as PDF</button>
+          </div>
+          <div id="los-report-output"></div>
+        </div>
+
       </div>
 
     </div><!-- /lifeos-app -->
@@ -809,6 +949,180 @@ function updateQuickStats() {
 
 // Init stats on load
 updateQuickStats();
+
+// --- REPORT GENERATOR ---
+function generateReport() {
+  const expenses = JSON.parse(localStorage.getItem('lifeos_expenses') || '[]');
+  const goals = JSON.parse(localStorage.getItem('lifeos_goals') || '[]');
+  const habits = JSON.parse(localStorage.getItem('lifeos_habits') || '[]');
+  const user = JSON.parse(localStorage.getItem('lifeos_current') || '{}');
+
+  const income = expenses.filter(e=>e.type==='income').reduce((a,e)=>a+e.amount,0);
+  const expense = expenses.filter(e=>e.type==='expense').reduce((a,e)=>a+e.amount,0);
+  const savings = income - expense;
+  const savingsRate = income > 0 ? Math.round((savings/income)*100) : 0;
+
+  // Category breakdown
+  const catTotals = {};
+  expenses.filter(e=>e.type==='expense').forEach(e => {
+    catTotals[e.category] = (catTotals[e.category]||0) + e.amount;
+  });
+  const maxCat = Math.max(...Object.values(catTotals), 1);
+  const topCat = Object.entries(catTotals).sort((a,b)=>b[1]-a[1]);
+
+  // Habits
+  const totalStreak = habits.reduce((a,h)=>a+h.streak,0);
+  const bestHabit = habits.sort((a,b)=>b.streak-a.streak)[0];
+  const doneToday = habits.filter(h=>h.doneToday).length;
+
+  // Goals
+  const completedGoals = goals.filter(g=>g.current>=g.target).length;
+  const totalGoalProgress = goals.length>0 ? Math.round(goals.reduce((a,g)=>a+(g.current/g.target*100),0)/goals.length) : 0;
+
+  // Insights
+  const insights = [];
+  if (savingsRate >= 30) insights.push('🌟 Excellent savings rate of ' + savingsRate + '%! You are building wealth effectively.');
+  else if (savingsRate >= 15) insights.push('✅ Decent savings rate of ' + savingsRate + '%. Try to push it above 30% for faster wealth building.');
+  else if (income > 0) insights.push('⚠️ Your savings rate is ' + savingsRate + '%. Focus on reducing your top spending category: ' + (topCat[0]?topCat[0][0]:'expenses') + '.');
+  if (topCat.length > 0) insights.push('💸 Your biggest expense category is <strong>' + topCat[0][0] + '</strong> at ' + fmt(topCat[0][1]) + '. Consider if this aligns with your goals.');
+  if (completedGoals > 0) insights.push('🏆 You have completed ' + completedGoals + ' goal' + (completedGoals>1?'s':'') + '! Set new ones to keep the momentum going.');
+  if (bestHabit) insights.push('🔥 Your best habit streak is <strong>' + bestHabit.name + '</strong> at ' + bestHabit.streak + ' days. Keep it going!');
+  if (doneToday === habits.length && habits.length > 0) insights.push('⚡ You completed ALL ' + habits.length + ' habits today. Absolute legend!');
+  if (income === 0) insights.push('📝 No income recorded yet. Start by adding your salary or income sources in the Finance tab.');
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-IN', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+
+  const html = `
+    <div class="report-card" id="printable-report">
+      <div class="report-hero">
+        <div class="report-badge">✦ Personal Finance Report</div>
+        <div class="report-title">${user.name || 'My'}'s Life OS Report</div>
+        <div class="report-subtitle">A complete snapshot of your finances, goals & habits</div>
+        <div class="report-date">📅 Generated on ${dateStr}</div>
+      </div>
+
+      <!-- FINANCIAL OVERVIEW -->
+      <div class="report-section">
+        <div class="report-section-title">💸 Financial Overview</div>
+        <div class="report-metrics">
+          <div class="report-metric"><div class="report-metric-label">Total Income</div><div class="report-metric-val rm-green">${fmt(income)}</div></div>
+          <div class="report-metric"><div class="report-metric-label">Total Expenses</div><div class="report-metric-val rm-red">${fmt(expense)}</div></div>
+          <div class="report-metric"><div class="report-metric-label">Net Savings</div><div class="report-metric-val rm-purple">${fmt(savings)}</div></div>
+          <div class="report-metric"><div class="report-metric-label">Savings Rate</div><div class="report-metric-val rm-green">${savingsRate}%</div></div>
+          <div class="report-metric"><div class="report-metric-label">Transactions</div><div class="report-metric-val rm-white">${expenses.length}</div></div>
+        </div>
+      </div>
+
+      <!-- SPENDING BY CATEGORY -->
+      ${topCat.length > 0 ? `
+      <div class="report-section">
+        <div class="report-section-title">📊 Spending by Category</div>
+        ${topCat.map(([cat, amt]) => `
+          <div class="report-cat-row">
+            <div class="report-cat-label"><span>${cat}</span><span>${fmt(amt)} (${expense>0?Math.round(amt/expense*100):0}%)</span></div>
+            <div class="report-cat-bar"><div class="report-cat-fill" style="width:${Math.round(amt/maxCat*100)}%"></div></div>
+          </div>
+        `).join('')}
+      </div>` : ''}
+
+      <!-- TRANSACTION HISTORY -->
+      ${expenses.length > 0 ? `
+      <div class="report-section">
+        <div class="report-section-title">📋 Transaction History</div>
+        <table class="report-txn-table">
+          <thead><tr><th>Description</th><th>Category</th><th>Date</th><th>Amount</th></tr></thead>
+          <tbody>
+            ${expenses.slice(0,20).map(e=>`
+              <tr>
+                <td>${e.desc}</td>
+                <td>${e.category}</td>
+                <td>${e.date}</td>
+                <td class="${e.type==='income'?'txn-income':'txn-expense'}">${e.type==='income'?'+':'-'}${fmt(e.amount)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        ${expenses.length>20?`<p style="font-size:12px;color:#6b6b80;margin-top:10px;text-align:center;">Showing 20 of ${expenses.length} transactions</p>`:''}
+      </div>` : ''}
+
+      <!-- GOALS -->
+      <div class="report-section">
+        <div class="report-section-title">🎯 Goals Progress</div>
+        ${goals.length > 0 ? `
+        <div class="report-metrics" style="margin-bottom:20px;">
+          <div class="report-metric"><div class="report-metric-label">Total Goals</div><div class="report-metric-val rm-white">${goals.length}</div></div>
+          <div class="report-metric"><div class="report-metric-label">Completed</div><div class="report-metric-val rm-green">${completedGoals}</div></div>
+          <div class="report-metric"><div class="report-metric-label">Avg Progress</div><div class="report-metric-val rm-purple">${totalGoalProgress}%</div></div>
+        </div>
+        <table class="report-table">
+          <thead><tr><th>Goal</th><th>Target</th><th>Saved</th><th>Progress</th><th>Status</th></tr></thead>
+          <tbody>
+            ${goals.map(g=>{
+              const pct = Math.min(100, Math.round(g.current/g.target*100));
+              return `<tr>
+                <td>${g.emoji} ${g.title}</td>
+                <td>${fmt(g.target)}</td>
+                <td>${fmt(g.current)}</td>
+                <td class="report-pct-cell" style="color:${pct>=100?'#c8f25a':pct>=50?'#7b61ff':'#ff6b6b'}">${pct}%</td>
+                <td>${pct>=100?'✅ Done':pct>=50?'🔄 Halfway':'🚀 Started'}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>` : '<p style="color:#6b6b80;font-size:13px;">No goals added yet.</p>'}
+      </div>
+
+      <!-- HABITS -->
+      <div class="report-section">
+        <div class="report-section-title">🔥 Habit Tracker</div>
+        ${habits.length > 0 ? `
+        <div class="report-metrics" style="margin-bottom:20px;">
+          <div class="report-metric"><div class="report-metric-label">Total Habits</div><div class="report-metric-val rm-white">${habits.length}</div></div>
+          <div class="report-metric"><div class="report-metric-label">Done Today</div><div class="report-metric-val rm-green">${doneToday}/${habits.length}</div></div>
+          <div class="report-metric"><div class="report-metric-label">Total Streak Days</div><div class="report-metric-val rm-purple">${totalStreak}</div></div>
+        </div>
+        <div class="report-habit-grid">
+          ${habits.map(h=>`
+            <div class="report-habit-item">
+              <div class="report-habit-left"><span>${h.emoji}</span><span>${h.name}</span></div>
+              <div class="report-habit-streak">${h.streak}🔥</div>
+            </div>
+          `).join('')}
+        </div>` : '<p style="color:#6b6b80;font-size:13px;">No habits added yet.</p>'}
+      </div>
+
+      <!-- AI INSIGHTS -->
+      <div class="report-section">
+        <div class="report-section-title">🧠 Insights & Suggestions</div>
+        <div class="report-insight">
+          <h4>✦ Your Personalised Analysis</h4>
+          ${insights.length > 0
+            ? insights.map(i=>`<div class="report-insight-item"><div class="report-insight-dot"></div><div>${i}</div></div>`).join('')
+            : '<div class="report-insight-item"><div class="report-insight-dot"></div><div>Add your financial data, goals and habits to get personalised insights here!</div></div>'
+          }
+        </div>
+      </div>
+
+    </div>
+  `;
+
+  document.getElementById('los-report-output').innerHTML = html;
+
+  // Animate bars after render
+  setTimeout(() => {
+    document.querySelectorAll('.report-cat-fill').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0';
+      setTimeout(() => { bar.style.width = w; }, 50);
+    });
+  }, 100);
+}
+
+function printReport() {
+  const report = document.getElementById('los-report-output').innerHTML;
+  if (!report) { generateReport(); setTimeout(printReport, 500); return; }
+  window.print();
+}
 </script>
 
 </body>
